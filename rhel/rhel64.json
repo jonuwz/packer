@@ -1,0 +1,71 @@
+{
+  "variables": {
+    "iso_url": "c:\\Users\\john\\iso\\nix\\rhel-server-6.4-x86_64-dvd.iso",
+    "iso_checksum": "00de3ae7e5a68b54f75dd4e7b9ada6e001e7cf93"
+  },
+  "builders": [{
+    "vm_name": "rhel64",
+    "vmdk_name": "rhel64",
+    "type": "vmware-iso",
+    "guest_os_type": "rhel6-64",
+    "http_directory": "http",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "sha1",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "disk_type_id": "0",
+    "ssh_wait_timeout": "10000s",
+    "tools_upload_flavor": "linux",
+    "boot_command": [
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks.cfg<enter>"
+    ],
+    "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+    "disk_size": 40960,
+    "vmx_data": {
+      "memsize": "1024",
+      "numvcpus": "2",
+      "cpuid.coresPerSocket": "2"
+    }
+  },
+  {
+    "vm_name": "rhel64",
+    "type": "virtualbox-iso",
+    "http_directory": "http",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "sha1",
+    "guest_os_type": "RedHat_64",
+    "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+    "virtualbox_version_file": ".vbox_version",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "10000s",
+    "boot_command": [
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/ks.cfg<enter>"
+    ],
+    "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
+    "disk_size": 40960,
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "1024"],
+      ["modifyvm", "{{.Name}}", "--cpus", "2"]
+    ]
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "execute_command": "echo 'vagrant' | {{.Vars}} sudo -E -S bash '{{.Path}}'",
+    "scripts": [
+      "script/base.sh",
+      "script/vagrant.sh",
+      "script/sshd.sh",
+      "script/vmtools.sh",
+      "script/cleanup.sh",
+      "script/zerodisk.sh"
+    ]
+  }],
+  "post-processors": [{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "output": "../../{{.Provider}}/rhel64.box"
+  }]
+}
