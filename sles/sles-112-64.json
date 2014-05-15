@@ -1,11 +1,12 @@
 {
   "variables": {
-    "iso_url": "c:\\Users\\john\\iso\\nix\\SLES-11-SP2-DVD-x86_64-GM-DVD1.iso",
-    "iso_checksum": "f691b82f2c8daa0d5ea929fe7180b22b28b6fab2"
+    "iso_url": "/srv/iso/SLES-11-SP2-DVD-x86_64-GM-DVD1.iso",
+    "iso_checksum": "f691b82f2c8daa0d5ea929fe7180b22b28b6fab2",
+    "name": "sles-11.2-64"
   },
   "builders": [
     {
-      "vm_name": "sles-11.2-64",
+      "vm_name": "{{ user `name` }}",
       "type": "vmware-iso",
       "guest_os_type": "sles11-64",
       "http_directory": "http",
@@ -35,14 +36,14 @@
       }
     },
     {
-      "vm_name": "sles-11.2-64",
+      "vm_name": "{{ user `name` }}",
       "type": "virtualbox-iso",
       "guest_os_type": "OpenSUSE_64",
       "http_directory": "http",
       "iso_url":  "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
       "iso_checksum_type": "sha1",
-      "guest_additions_url": "C:\\Program Files\\Oracle\\VirtualBox\\VBoxGuestAdditions.iso",
+      "guest_additions_url": "/usr/share/virtualbox/VBoxGuestAdditions.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "headless": false,
@@ -62,6 +63,32 @@
         ["modifyvm", "{{.Name}}", "--memory", "1024"],
         ["modifyvm", "{{.Name}}", "--cpus", "1"]
       ]
+    },
+    {
+      "vm_name": "{{ user `name` }}",
+      "type": "qemu",
+      "accelerator": "kvm",
+      "http_directory": "http",
+      "iso_url":  "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "boot_command": [
+        "<esc><enter><wait>",
+        "linux netdevice=eth0 netsetup=dhcp",
+        " install=cd:/",
+        " lang=en_US autoyast=http://{{ .HTTPIP }}:{{ .HTTPPort }}/autoinst_qemu.xml",
+        " textmode=1",
+        "<enter>"
+      ],
+      "ssh_wait_timeout": "10000s",
+      "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -h now",
+      "disk_size": 8192,
+      "format": "qcow2",
+      "qemuargs": [
+        [ "-m", "1024m" ]
+      ]
     }
   ],
   "provisioners": [{
@@ -75,9 +102,9 @@
     ]
   }],
   "post-processors": [{
-    "type": "vagrant",
-    "keep_input_artifact": false,
-    "output": "../../{{.Provider}}/sles112.box"
-  }]
-
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "output": "../../{{.Provider}}/{{ user `name` }}.box",
+      "only": ["virtualbox-iso","vmware-iso"]
+    }]
 }
