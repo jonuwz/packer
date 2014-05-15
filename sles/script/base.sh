@@ -12,3 +12,4 @@ echo -e "UseDNS no\n" >> /etc/ssh/sshd_config
 echo -e "\nremove zypper package locks ..."
 rm -f /etc/zypp/locks
 rm /etc/udev/rules.d/70-persistent-net.rules
+
