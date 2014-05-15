@@ -1,15 +1,9 @@
 #!/bin/bash
-mkdir -p /tmp/grow 
-cd /tmp/grow
-for i in 51-growpart.sh growpart patch-initrd.sh;do
-  wget -O $i --no-check-certificate https://github.com/kallisti5/sles-initrd-growpart/raw/master/$i
-done
+cd /tmp/files
 chmod +x *
-sed -i 's#default 0/default 3#default ./default 2#' /tmp/grow/patch-initrd.sh
-sed -i 's#e2fsck -f#e2fsck -y -f#' /tmp/grow/51-growpart.sh
 ./patch-initrd.sh
 cd /
-rm -rf /tmp/grow
+rm -rf /tmp/files
 sed -i -r 's/^\t/    /' /boot/grub/menu.lst
 
 # convert shit to real paths - not the by-id nonesense

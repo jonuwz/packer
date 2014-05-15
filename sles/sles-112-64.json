@@ -92,13 +92,18 @@
     }
   ],
   "provisioners": [{
-    "type": "shell",
+    "type": "file",
+    "source": "files",
+    "destination": "/tmp"
+  },
+  { "type": "shell",
     "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
     "scripts": [
       "script/base.sh",
       "script/vagrant.sh",
       "script/vmtools.sh",
-      "script/growpart.sh"
+      "script/growpart.sh",
+      "script/zero.sh"
     ]
   }],
   "post-processors": [{
