@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #%stage: device
 
 # Based on original work of Robert Plestenjak, robert.plestenjak@xlab.si
@@ -29,9 +29,9 @@ done
 # change size only if size diff is greater than 20480 blocks
 if [ ${part_zero} -gt 20480 ]; then
 	echo "Growpart: Resizing root filesystem ${root_dev} partition ${part_num}"
-	growpart --fudge 20480 -v ${root_dev} ${part_num}
-	e2fsck -y -f ${root_dev}${part_num}
-	resize2fs ${root_dev}${part_num}
+	/sbin/growpart --fudge 20480 -v ${root_dev} ${part_num}
+	/sbin/e2fsck -y -f ${root_dev}${part_num}
+	/sbin/resize2fs ${root_dev}${part_num}
 else
 	echo "Growpart: No change needed on ${root_dev} partition ${part_num}"
 fi

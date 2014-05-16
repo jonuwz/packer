@@ -1,7 +1,7 @@
 {
   "variables": {
     "iso_url": "/srv/iso/SLES-11-SP2-DVD-x86_64-GM-DVD1.iso",
-    "iso_checksum": "f691b82f2c8daa0d5ea929fe7180b22b28b6fab2",
+    "iso_checksum": "461d82ae6e15062b0807c1338f040497",
     "name": "sles-11.2-64"
   },
   "builders": [
@@ -12,7 +12,7 @@
       "http_directory": "http",
       "iso_url": "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "md5",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "tools_upload_flavor": "linux",
@@ -42,7 +42,7 @@
       "http_directory": "http",
       "iso_url":  "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "md5",
       "guest_additions_url": "/usr/share/virtualbox/VBoxGuestAdditions.iso",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -71,7 +71,7 @@
       "http_directory": "http",
       "iso_url":  "{{ user `iso_url` }}",
       "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
+      "iso_checksum_type": "md5",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
       "boot_command": [
@@ -84,7 +84,7 @@
       ],
       "ssh_wait_timeout": "10000s",
       "shutdown_command": "echo 'vagrant'|sudo -S /sbin/shutdown -h now",
-      "disk_size": 8192,
+      "disk_size": 1024,
       "format": "qcow2",
       "qemuargs": [
         [ "-m", "1024m" ]

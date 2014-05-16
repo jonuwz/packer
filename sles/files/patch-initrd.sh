@@ -41,7 +41,7 @@ function modify-initrd () {
 	deps "($(ldd sbin/partprobe))"
 	echo "--- adding initrd task to resize '/'"
 	chmod 755 boot/51-growpart.sh
-	sed -i '/preping 81-resume.userspace.sh/i\
+	sed -i '/preping 21-devinit_done.sh/i\
 [ "$debug" ] && echo running 51-growpart.sh\nsource boot/51-growpart.sh' run_all.sh
 	echo "--- done"
 }

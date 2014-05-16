@@ -729,7 +729,7 @@
           <partition_nr config:type="integer">1</partition_nr>
           <raid_options/>
           <resize config:type="boolean">false</resize>
-          <size>4096M</size>
+          <size>all</size>
         </partition>
       </partitions>
       <pesize></pesize>
@@ -777,15 +777,13 @@
   </runlevel>
   <software>
     <packages config:type="list">
-      <package>desktop-translations</package>
-      <package>gcc</package>
-      <package>gcc43</package>
-      <package>glibc-devel</package>
       <package>yast2-trans-en_GB</package>
+      <package>openssh</package>
+      <package>sudo</package>
+      <package>vim</package>
     </packages>
     <patterns config:type="list">
       <pattern>Minimal</pattern>
-      <pattern>base</pattern>
     </patterns>
     <remove-packages config:type="list">
       <package>Mesa</package>
