@@ -12,7 +12,7 @@
       </device_map_entry>
       <device_map_entry>
         <firmware>hd0</firmware>
-        <linux>/dev/vda</linux>
+        <linux>/dev/sda</linux>
       </device_map_entry>
     </device_map>
     <global>
@@ -45,7 +45,7 @@
         <lines_cache_id>0</lines_cache_id>
         <name>SUSE Linux Enterprise Server 11 SP2 - 3.0.13-0.27</name>
         <original_name>linux</original_name>
-        <root>/dev/vda1</root>
+        <root>/dev/sda1</root>
         <type>image</type>
         <vgamode>0x314</vgamode>
       </section>
@@ -56,7 +56,7 @@
         <lines_cache_id>1</lines_cache_id>
         <name>Failsafe -- SUSE Linux Enterprise Server 11 SP2 - 3.0.13-0.27</name>
         <original_name>failsafe</original_name>
-        <root>/dev/vda1</root>
+        <root>/dev/sda1</root>
         <type>image</type>
         <vgamode>0x314</vgamode>
       </section>
@@ -713,7 +713,7 @@
   </ntp-client>
   <partitioning config:type="list">
     <drive>
-      <device>/dev/vda</device>
+      <device>/dev/sda</device>
       <initialize config:type="boolean">true</initialize>
       <partitions config:type="list">
         <partition>
@@ -777,6 +777,10 @@
   </runlevel>
   <software>
     <packages config:type="list">
+      <package>gcc</package>
+      <package>gcc43</package>
+      <package>glibc-devel</package>
+      <package>kernel-default-devel</package>
       <package>yast2-trans-en_GB</package>
       <package>openssh</package>
       <package>sudo</package>
@@ -842,24 +846,6 @@
       <uid>1000</uid>
       <user_password>$2y$05$NTYMkr4vNkYncvM7iiFAcOLl1mTLEfSGw8w1.2fYuC6nIwahYzHyW</user_password>
       <username>vagrant</username>
-    </user>
-   <user>
-      <encrypted config:type="boolean">true</encrypted>
-      <fullname>devopsadmin</fullname>
-      <gid>100</gid>
-      <home>/home/devopsadmin</home>
-      <password_settings>
-        <expire></expire>
-        <flag></flag>
-        <inact></inact>
-        <max>99999</max>
-        <min>0</min>
-        <warn>7</warn>
-      </password_settings>
-      <shell>/bin/bash</shell>
-      <uid>1001</uid>
-      <user_password>$2y$05$NTYMkr4vNkYncvM7iiFAcOLl1mTLEfSGw8w1.2fYuC6nIwahYzHyW</user_password>
-      <username>devopsadmin</username>
     </user>
     <user>
       <encrypted config:type="boolean">true</encrypted>
