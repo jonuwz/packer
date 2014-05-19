@@ -779,6 +779,7 @@
     <packages config:type="list">
       <package>gcc</package>
       <package>gcc43</package>
+      <package>make</package>
       <package>glibc-devel</package>
       <package>kernel-default-devel</package>
       <package>yast2-trans-en_GB</package>
