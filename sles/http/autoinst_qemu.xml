@@ -238,7 +238,7 @@
       <gid>33</gid>
       <group_password>x</group_password>
       <groupname>video</groupname>
-      <userlist>vagrant</userlist>
+      <userlist>devopsadmin</userlist>
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
@@ -294,7 +294,7 @@
       <gid>16</gid>
       <group_password>x</group_password>
       <groupname>dialout</groupname>
-      <userlist>vagrant</userlist>
+      <userlist>devopsadmin</userlist>
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
@@ -827,24 +827,6 @@
   <users config:type="list">
     <user>
       <encrypted config:type="boolean">true</encrypted>
-      <fullname>vagrant</fullname>
-      <gid>100</gid>
-      <home>/home/vagrant</home>
-      <password_settings>
-        <expire></expire>
-        <flag></flag>
-        <inact></inact>
-        <max>99999</max>
-        <min>0</min>
-        <warn>7</warn>
-      </password_settings>
-      <shell>/bin/bash</shell>
-      <uid>1000</uid>
-      <user_password>$2y$05$NTYMkr4vNkYncvM7iiFAcOLl1mTLEfSGw8w1.2fYuC6nIwahYzHyW</user_password>
-      <username>vagrant</username>
-    </user>
-   <user>
-      <encrypted config:type="boolean">true</encrypted>
       <fullname>devopsadmin</fullname>
       <gid>100</gid>
       <home>/home/devopsadmin</home>
@@ -857,7 +839,7 @@
         <warn>7</warn>
       </password_settings>
       <shell>/bin/bash</shell>
-      <uid>1001</uid>
+      <uid>1000</uid>
       <user_password>$2y$05$NTYMkr4vNkYncvM7iiFAcOLl1mTLEfSGw8w1.2fYuC6nIwahYzHyW</user_password>
       <username>devopsadmin</username>
     </user>
@@ -1038,7 +1020,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>0</uid>
-      <user_password>$2y$05$5R7WmNcIe/9BkXBFK9VBLu/zrcLMge4kIqoFTfeDzL6alK1O.65yO</user_password>
+      <user_password>$2y$10$Z4E490NyROxt77wrMHUNxunINAWBuUj7nkfxENDjSJFSAxudKsPIi</user_password>
       <username>root</username>
     </user>
     <user>
@@ -1248,4 +1230,19 @@
       <username>sshd</username>
     </user>
   </users>
+  <configure>
+    <scripts>
+      <post-scripts config:type="list">
+        <script>
+          <filename>post.sh</filename>
+          <interpreter>shell</interpreter>
+          <source><![CDATA[#!/bin/sh
+/bin/sed -i -r -e 's/^(Defaults targetpw.*)/#\1/' -e 's/^(ALL\s+ALL=.ALL.\s+ALL\s+#\s+WARN.*)/#\1/' /etc/sudoers
+echo >> /etc/sudoers
+echo 'Defaults:devopsadmin !requiretty' >> /etc/sudoers
+echo 'devopsadmin ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers]]></source>
+        </script>
+      </post-scripts>
+    </scripts>
+  </configure>
 </profile>

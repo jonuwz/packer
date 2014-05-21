@@ -3,12 +3,10 @@ cd /tmp/files
 chmod +x *
 ./patch-initrd.sh
 cd /
-rm -rf /tmp/files
 sed -i -r 's/^\t/    /' /boot/grub/menu.lst
 
 # convert shit to real paths - not the by-id nonesense
-perl -i -pe 's#(/dev/disk/by-\S+)#{$out=qx(readlink -f $1);chomp $out;$out}#eg' /boot/grub/menu.lst
-perl -i -pe 's#spash=silent#splash=verbose#' /boot/grub/menu.lst
+perl -i -pe 's#(/dev/disk/by-\S+)#{$out=qx(readlink -f $1);chomp $out;$out}#eg;s#splash=silent#splash=verbose#g;s#^timeout .*#timeout 2#' /boot/grub/menu.lst
 perl -i -ne 'if (m#^(/dev/disk/by-\S+)(.*)#) {$real=qx(readlink -f $1);chomp $real;print "$real $2\n"} else { print }' /etc/fstab
 
 echo "fstab"

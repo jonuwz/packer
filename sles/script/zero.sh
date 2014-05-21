@@ -5,8 +5,7 @@ zypper ref
 
 docfiles=`find /usr/share/doc/packages -type f |grep -iv "copying\|license\|copyright"`
 rm -f $docfiles
-rm -rf /usr/share/info
-rm -rf /usr/share/man
+rm -rf /usr/share/info /usr/share/man /tmp/files
 
 dd if=/dev/zero of=/zerofile
 rm -f /zerofile

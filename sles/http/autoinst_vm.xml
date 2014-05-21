@@ -1235,4 +1235,19 @@
       <username>sshd</username>
     </user>
   </users>
+  <configure>
+    <scripts>
+      <post-scripts config:type="list">
+        <script>
+          <filename>post.sh</filename>
+          <interpreter>shell</interpreter>
+          <source><![CDATA[#!/bin/sh
+/bin/sed -i -r -e 's/^(Defaults targetpw.*)/#\1/' -e 's/^(ALL\s+ALL=.ALL.\s+ALL\s+#\s+WARN.*)/#\1/' /etc/sudoers
+echo >> /etc/sudoers
+echo 'Defaults:vagrant !requiretty' >> /etc/sudoers
+echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers]]></source>
+        </script>
+      </post-scripts>
+    </scripts>
+  </configure>
 </profile>
